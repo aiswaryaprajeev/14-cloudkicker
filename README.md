@@ -8,10 +8,8 @@
 ## Architecture
 Internet
    |
-   v
 Nginx (Port 80)
    |
-   v
 Flask (127.0.0.1:5000)
 
 Flask is bound to 127.0.0.1:5000 and is not exposed publicly.
