@@ -1,0 +1,29 @@
+ Task 14 - Cloudkicker ( Flask + Nginx Reverse Proxy)
+
+1. Created a free Linux VM in AWS EC2 instnce ( OS: Ubuntu 22.04, t3.micro ).
+2. Connected to the server using SSH from Kali Linux : ssh -i cloudkicker-key.pem ubuntu@13.53.130.191
+3. Installed required packages: sudo apt update
+				sudo apt install git python3 python3-venv python3-pip nginx
+
+4. Cloned the Flask project: git clone https://github.com/aiswaryaprajeev/12-fsd-flask.git
+			     cd 12-fsd-flask
+5. Created and activated virtual environment: python3 -m venv venv
+					      source venv/bin/activate
+6. Installed dependencies: pip install -r requirements.txt
+7. Run Flask locally: flask run --host=127.0.0.1 --port=5000
+8. Configured Nginx reverse proxy: sudo nano /etc/nginx/sites-available/cloudkicker
+			    Added: server {
+    				   listen 80;
+    				   location / {
+        			   proxy_pass http://127.0.0.1:5000;
+    					   }
+					}
+9. Enabled site: sudo ln -s /etc/nginx/sites-available/cloudkicker /etc/nginx/sites-enabled/
+		 sudo systemctl restart nginx
+10. Updated AWS security group:	Allowed inbound TCP 80 (HTTP)
+				Kept port 5000 closed.
+11. Verified application by accessing: http://13.53.130.191
+
+Result:	The login page loads successfully.
+	Users can register and log in.
+	After login, the dashboard page is displayed.
